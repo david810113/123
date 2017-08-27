@@ -72,28 +72,43 @@ reg [7:0] counter_pre;
 */
 	
 wire [13:0] reff;
-reg [30:0] weight;	
+reg [30:0] weight;
+reg [30:0] weight_pre;
 	
-reff =  (counter == 6'd16) ? reff_0 :
-		(counter == 6'd17) ? reff_1 :
-		(counter == 6'd18) ? reff_2 :		
-		(counter == 6'd19) ? reff_3 :
-		(counter == 6'd20) ? reff_4 :			
-		(counter == 6'd21) ? reff_5 :
-		(counter == 6'd22) ? reff_6 :		
-		(counter == 6'd23) ? reff_7 :
-		(counter == 6'd24) ? reff_8 :		
-		(counter == 6'd25) ? reff_9 :
-		(counter == 6'd26) ? reff_10 :		
-		(counter == 6'd27) ? reff_11 :
-		(counter == 6'd28) ? reff_12 :			
-		(counter == 6'd29) ? reff_13 :
-		(counter == 6'd30) ? reff_14 :		
-		(counter == 6'd31) ? reff_15 :
-		14'b0;
+reff =  {14{(counter == 6'd16)}} & reff_0 |
+	{14{(counter == 6'd17)}} & reff_1 |
+	{14{(counter == 6'd18)}} & reff_2 |		
+	{14{(counter == 6'd19)}} & reff_3 |
+	{14{(counter == 6'd20)}} & reff_4 |
+	{14{(counter == 6'd21)}} & reff_5 |		
+	{14{(counter == 6'd22)}} & reff_6 |	
+	{14{(counter == 6'd23)}} & reff_7 |
+	{14{(counter == 6'd24)}} & reff_8 |		
+	{14{(counter == 6'd25)}} & reff_9 |
+	{14{(counter == 6'd26)}} & reff_10 |
+	{14{(counter == 6'd27)}} & reff_11 |		
+	{14{(counter == 6'd28)}} & reff_12 |			
+	{14{(counter == 6'd29)}} & reff_13 |
+	{14{(counter == 6'd30)}} & reff_14 |		
+	{14{(counter == 6'd31)}} & reff_15 ;
 
 		
-		
+weight_pre =    {30{(counter == 6'd16)}} & weight_in_0 |
+		{30{(counter == 6'd17)}} & weight_in_1 |
+		{30{(counter == 6'd18)}} & weight_in_2 |		
+		{30{(counter == 6'd19)}} & weight_in_3 |
+		{30{(counter == 6'd20)}} & weight_in_4 |
+		{30{(counter == 6'd21)}} & weight_in_5 |		
+		{30{(counter == 6'd22)}} & weight_in_6 |	
+		{30{(counter == 6'd23)}} & weight_in_7 |
+		{30{(counter == 6'd24)}} & weight_in_8 |		
+		{30{(counter == 6'd25)}} & weight_in_9 |
+		{30{(counter == 6'd26)}} & weight_in_10 |
+		{30{(counter == 6'd27)}} & weight_in_11 |		
+		{30{(counter == 6'd28)}} & weight_in_12 |			
+		{30{(counter == 6'd29)}} & weight_in_13 |
+		{30{(counter == 6'd30)}} & weight_in_14 |		
+		{30{(counter == 6'd31)}} & weight_in_15 ;		
 		
 	
 	
@@ -102,19 +117,28 @@ reff =  (counter == 6'd16) ? reff_0 :
 	always@(posedge clk or negedge rstn)
     begin
     if (rstn == 0)
-        weight <= #2  32'd0;
+        weight <= #2  30'd0;
     else if(weight_cal_state == 1'b1)
-	weight <= #2 weight +(e * reff);//not yet
+	weight <= #2 weight_pre +(e * reff);//not yet
     else
         weight <= #2  weight;
     end 
 
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	always@(posedge clk or negedge rstn)
     begin
     if (rstn == 0)
-        weight_in_0 <= #2  32'd0;
+        weight_in_0 <= #2  30'd0;
     else if(counter == 6'd16)
 	weight_in_0 <= #2 weight;
     else
@@ -128,7 +152,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_1 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_1 <= #2 weight_in_1 + (e * reff_1);//not yet
+	weight_in_1 <= #2 weight_in_1;//not yet
     else
         weight_in_1 <= #2  weight_in_1;
     end 
@@ -138,7 +162,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_2 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_2 <= #2 weight_in_2 + (e * reff_2);//not yet
+	weight_in_2 <= #2 weight_in_2;//not yet
     else
         weight_in_2 <= #2  weight_in_2;
     end 
@@ -148,7 +172,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_3 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_3 <= #2 weight_in_3 + (e * reff_3);//not yet
+	weight_in_3 <= #2 weight_in_3;//not yet
     else
         weight_in_3 <= #2  weight_in_3;
     end 
@@ -158,7 +182,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_4 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_4 <= #2 weight_in_4 + (e * reff_4);//not yet
+	weight_in_4 <= #2 weight_in_4;//not yet
     else
         weight_in_4 <= #2  weight_in_4;
     end 
@@ -168,7 +192,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_5 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_5 <= #2 weight_in_5 + (e * reff_5);//not yet
+	weight_in_5 <= #2 weight_in_5;//not yet
     else
         weight_in_5 <= #2  weight_in_5;
     end 
@@ -178,7 +202,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_6 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_6 <= #2 weight_in_6 + (e * reff_6);//not yet
+	weight_in_6 <= #2 weight_in_6;//not yet
     else
         weight_in_6 <= #2  weight_in_6;
     end 
@@ -188,7 +212,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_7 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_7 <= #2 weight_in_7 + (e * reff_7);//not yet
+	weight_in_7 <= #2 weight_in_7;//not yet
     else
         weight_in_7 <= #2  weight_in_7;
     end 
@@ -198,7 +222,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_8 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_8 <= #2 weight_in_8 + (e * reff_8);//not yet
+	weight_in_8 <= #2 weight_in_8;//not yet
     else
         weight_in_8 <= #2  weight_in_8;
     end 
@@ -208,7 +232,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_9 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_9 <= #2 weight_in_9+ (e * reff_9);//not yet
+	weight_in_9 <= #2 weight_in_9;//not yet
     else
         weight_in_9 <= #2  weight_in_9;
     end 
@@ -218,7 +242,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_10 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_10 <= #2 weight_in_10 + (e * reff_10);//not yet
+	weight_in_10 <= #2 weight_in_10;//not yet
     else
         weight_in_10 <= #2  weight_in_10;
     end 
@@ -228,7 +252,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_11 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_11 <= #2 weight_in_11 + (e * reff_11);//not yet
+	weight_in_11 <= #2 weight_in_11;//not yet
     else
         weight_in_11 <= #2  weight_in_11;
     end 
@@ -238,7 +262,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_12 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_12 <= #2 weight_in_12 + (e * reff_12);//not yet
+	weight_in_12 <= #2 weight_in_12;//not yet
     else
         weight_in_12 <= #2  weight_in_12;
     end 
@@ -248,7 +272,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_13 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_13 <= #2 weight_in_13 + (e * reff_13);//not yet
+	weight_in_13 <= #2 weight_in_13;//not yet
     else
         weight_in_13 <= #2  weight_in_13;
     end 
@@ -258,7 +282,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_14 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_14 <= #2 weight_in_14 + (e * reff_14);//not yet
+	weight_in_14 <= #2 weight_in_14;//not yet
     else
         weight_in_14 <= #2  weight_in_14;
     end 
@@ -269,7 +293,7 @@ reff =  (counter == 6'd16) ? reff_0 :
     if (rstn == 0)
         weight_in_15 <= #2  32'd0;
     else if(weight_cal_state == 1'b1)
-	weight_in_15 <= #2 weight_in_15 + (e * reff_15);//not yet
+	weight_in_15 <= #2 weight_in_15;//not yet
     else
         weight_in_15 <= #2  weight_in_15;
     end
